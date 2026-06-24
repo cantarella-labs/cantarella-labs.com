@@ -1,0 +1,20 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const services = [
+  { title: "TODO: Service 1", body: "TODO: what it is, who it's for, what they get." },
+  { title: "TODO: Service 2", body: "TODO: what it is, who it's for, what they get." },
+  { title: "TODO: Service 3", body: "TODO: what it is, who it's for, what they get." },
+];
+---
+
+<Layout title="Services — Cantarella Labs" description="TODO: services overview.">
+  <h1>Services</h1>
+  {services.map((s) => (
+    <section>
+      <h2>{s.title}</h2>
+      <p>{s.body}</p>
+    </section>
+  ))}
+  <p><a href="/contact/">Discuss a project &rarr;</a></p>
+</Layout>

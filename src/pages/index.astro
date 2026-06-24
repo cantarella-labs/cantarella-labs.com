@@ -1,14 +1,36 @@
 ---
-import Welcome from "../components/Welcome.astro";
 import Layout from "../layouts/Layout.astro";
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
 
-<Layout>
-  <body>
-    <h1>PAU NO CU</h1>
-  </body>
-  <Welcome />
+<Layout
+  title="Cantarella Labs — Consulting"
+  description="Independent consultancy. TODO: one-line description of what you do and for whom."
+>
+  <section class="hero">
+    <h1>TODO: What you do, in one line.</h1>
+    <p>TODO: who it's for and the outcome you deliver. Keep it to two sentences.</p>
+    <a class="cta" href="/contact/">Get in touch</a>
+  </section>
+
+  <section>
+    <h2>How I can help</h2>
+    <ul class="cards">
+      <li><h3>TODO: Service 1</h3><p>TODO: short description.</p></li>
+      <li><h3>TODO: Service 2</h3><p>TODO: short description.</p></li>
+      <li><h3>TODO: Service 3</h3><p>TODO: short description.</p></li>
+    </ul>
+    <p><a href="/services/">See all services &rarr;</a></p>
+  </section>
 </Layout>
+
+<style>
+  .hero { padding: 2rem 0 3rem; }
+  .hero h1 { font-size: 2.5rem; line-height: 1.15; }
+  .cta {
+    display: inline-block; margin-top: 1rem; padding: 0.7rem 1.4rem;
+    background: var(--accent); color: #fff; border-radius: 6px; text-decoration: none;
+  }
+  .cards { list-style: none; padding: 0; display: grid; gap: 1.25rem; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); }
+  .cards li { border: 1px solid #eee; border-radius: 8px; padding: 1.25rem; }
+  .cards h3 { margin-top: 0; }
+</style>

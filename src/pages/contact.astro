@@ -1,0 +1,94 @@
+---
+import Layout from "../layouts/Layout.astro";
+// Get a free access key at https://web3forms.com (verify vcantarella@cantarellalabs.com once).
+// Submissions are emailed there; no backend to run.
+const ACCESS_KEY = "8c47c0d2-273a-4747-91de-e09ff9502933";
+---
+
+<Layout
+  title="Contact — Cantarella Labs"
+  description="Get in touch with Cantarella Labs."
+>
+  <h1>Contact</h1>
+  <p>Tell me about your project and I'll get back to you.</p>
+
+  <form id="contact-form">
+    <input type="hidden" name="access_key" value={ACCESS_KEY} />
+    <input
+      type="hidden"
+      name="subject"
+      value="New enquiry from cantarellalabs.com"
+    />
+    <!-- ponytail: honeypot for bots; real users never see it -->
+    <input
+      type="checkbox"
+      name="botcheck"
+      class="hidden"
+      tabindex="-1"
+      autocomplete="off"
+    />
+
+    <label>Name<input type="text" name="name" required /></label>
+    <label>Email<input type="email" name="email" required /></label>
+    <label>Message<textarea name="message" rows="6" required></textarea></label>
+
+    <button type="submit">Send</button>
+    <p id="status" role="status" aria-live="polite"></p>
+  </form>
+</Layout>
+
+<script>
+  const form = document.getElementById("contact-form") as HTMLFormElement;
+  const status = document.getElementById("status")!;
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    status.textContent = "Sending…";
+    const res = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      body: new FormData(form),
+    });
+    if (res.ok) {
+      form.reset();
+      status.textContent = "Thanks — I'll be in touch soon.";
+    } else {
+      status.textContent =
+        "Something went wrong. Email vcantarella@cantarellalabs.com directly.";
+    }
+  });
+</script>
+
+<style>
+  form {
+    display: grid;
+    gap: 1rem;
+    max-width: 32rem;
+  }
+  label {
+    display: grid;
+    gap: 0.3rem;
+    font-weight: 600;
+  }
+  input,
+  textarea {
+    font: inherit;
+    padding: 0.6rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+  }
+  button {
+    justify-self: start;
+    padding: 0.7rem 1.4rem;
+    background: var(--accent);
+    color: #fff;
+    border: 0;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  #status {
+    color: var(--muted);
+    font-weight: 600;
+  }
+  .hidden {
+    display: none;
+  }
+</style>

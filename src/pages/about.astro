@@ -1,15 +1,15 @@
-<body>
-  <h1>My Astro Site</h1>
-  <h1>About Me</h1>
-  <h2>... and my new Astro site!</h2>
+---
+import Layout from "../layouts/Layout.astro";
 
-  <p>
-    I am working through Astro's introductory tutorial. This is the second page
-    on my website, and it's the first one I built myself!
-  </p>
+const skills = ["TODO", "TODO", "TODO"];
+---
 
-  <p>
-    This site will update as I complete more of the tutorial, so keep checking
-    back and see how my journey is going!
-  </p>
-</body>
+<Layout title="About — Cantarella Labs" description="TODO: short bio.">
+  <h1>About</h1>
+  <p>TODO: who you are, your background, and why a client should trust you. A few sentences.</p>
+
+  <h2>What I bring</h2>
+  <ul>
+    {skills.map((s) => <li>{s}</li>)}
+  </ul>
+</Layout>
