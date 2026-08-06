@@ -2,7 +2,7 @@
 const { title = 'Cantarella Labs', description = '' } = Astro.props;
 const nav = [
   { href: '/', label: 'Home' },
-  { href: '/services/', label: 'Services' },
+  { href: '/case-studies/', label: 'Case Studies' },
   { href: '/about/', label: 'About' },
   { href: '/blog/', label: 'Insights' },
   { href: '/contact/', label: 'Contact' },
@@ -43,14 +43,27 @@ const path = Astro.url.pathname;
 <style is:global>
   :root {
     --max: 64rem;
+    --bg: #fff;
     --ink: #1a1a2e;
     --muted: #555;
     --accent: #2563eb;
+    --border: #eee;
+    color-scheme: light dark;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #14141f;
+      --ink: #e8e8f0;
+      --muted: #a0a0ab;
+      --accent: #60a5fa;
+      --border: #2c2c3a;
+    }
   }
   * { box-sizing: border-box; }
   html, body { margin: 0; }
   body {
     font-family: system-ui, -apple-system, sans-serif;
+    background: var(--bg);
     color: var(--ink);
     line-height: 1.6;
     display: flex;
@@ -77,6 +90,6 @@ const path = Astro.url.pathname;
   footer {
     max-width: var(--max); width: 100%; margin: 0 auto;
     padding: 2rem 1.5rem; color: var(--muted); font-size: 0.9rem;
-    border-top: 1px solid #eee;
+    border-top: 1px solid var(--border);
   }
 </style>

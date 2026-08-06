@@ -1,19 +1,29 @@
 ---
-import Layout from "../layouts/Layout.astro";
+import Layout from "../../layouts/Layout.astro";
 
-const services = [
-  { title: "TODO: Service 1", body: "TODO: what it is, who it's for, what they get." },
-  { title: "TODO: Service 2", body: "TODO: what it is, who it's for, what they get." },
-  { title: "TODO: Service 3", body: "TODO: what it is, who it's for, what they get." },
-];
+const pages = import.meta.glob<{ meta?: { title: string; blurb: string } }>(
+  "./*.astro",
+  { eager: true },
+);
+const cases = Object.entries(pages).flatMap(([path, page]) =>
+  page.meta
+    ? [
+        {
+          href: `/case-studies/${path.replace("./", "").replace(".astro", "")}/`,
+          title: page.meta.title,
+          body: page.meta.blurb,
+        },
+      ]
+    : [],
+);
 ---
 
-<Layout title="Services — Cantarella Labs" description="TODO: services overview.">
-  <h1>Services</h1>
-  {services.map((s) => (
+<Layout title="Case Studies — Cantarella Labs" description="Case studies we are working on.">
+  <h1>Case Studies</h1>
+  {cases.map((c) => (
     <section>
-      <h2>{s.title}</h2>
-      <p>{s.body}</p>
+      <h2><a href={c.href}>{c.title}</a></h2>
+      <p>{c.body}</p>
     </section>
   ))}
   <p><a href="/contact/">Discuss a project &rarr;</a></p>

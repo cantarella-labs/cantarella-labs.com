@@ -1,5 +1,21 @@
 ---
 import Layout from "../layouts/Layout.astro";
+
+const pages = import.meta.glob<{ meta?: { title: string; blurb: string } }>(
+  "./case-studies/*.astro",
+  { eager: true },
+);
+const cases = Object.entries(pages).flatMap(([path, page]) =>
+  page.meta
+    ? [
+        {
+          href: path.replace("./", "/").replace(".astro", "/"),
+          title: page.meta.title,
+          body: page.meta.blurb,
+        },
+      ]
+    : [],
+);
 ---
 
 <Layout
@@ -19,7 +35,19 @@ import Layout from "../layouts/Layout.astro";
       <li><h3>TODO: Service 2</h3><p>TODO: short description.</p></li>
       <li><h3>TODO: Service 3</h3><p>TODO: short description.</p></li>
     </ul>
-    <p><a href="/services/">See all services &rarr;</a></p>
+  </section>
+
+  <section>
+    <h2>Case studies</h2>
+    <ul class="cards">
+      {cases.map((c) => (
+        <li>
+          <h3><a href={c.href}>{c.title}</a></h3>
+          <p>{c.body}</p>
+        </li>
+      ))}
+    </ul>
+    <p><a href="/case-studies/">See all case studies &rarr;</a></p>
   </section>
 </Layout>
 
@@ -31,6 +59,6 @@ import Layout from "../layouts/Layout.astro";
     background: var(--accent); color: #fff; border-radius: 6px; text-decoration: none;
   }
   .cards { list-style: none; padding: 0; display: grid; gap: 1.25rem; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); }
-  .cards li { border: 1px solid #eee; border-radius: 8px; padding: 1.25rem; }
+  .cards li { border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; }
   .cards h3 { margin-top: 0; }
 </style>

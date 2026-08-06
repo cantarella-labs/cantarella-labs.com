@@ -1,0 +1,226 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+export const meta = {
+  title: "Frost forecasting for orchards in Castilla La Mancha, Spain",
+  blurb:
+    "Global weather models, calibrated against on-site sensor data and blended into one verified frost probability — alerts up to 5 nights ahead.",
+};
+
+const dashboard_page = "https://frost.cantarellalabs.com/";
+---
+
+<Layout
+  title="Case study: Calibrated frost forecasts for orchards"
+  description={meta.blurb}
+>
+  <article class="case-study">
+    <p class="eyebrow">Case study · Agricultural forecasting</p>
+    <h1>Frost alerts a grower can act on</h1>
+
+    <ul class="stats">
+      <li>
+        <strong>1.4&thinsp;°C</strong> next-night forecast error
+      </li>
+      <li>
+        <strong>3 / 3</strong> archive frost nights alerted, one night ahead
+      </li>
+      <li><strong>0.99</strong> frost discrimination (AUC)</li>
+      <li><strong>~200</strong> verified nights across two frost seasons</li>
+    </ul>
+
+    <p>
+      Global weather models run on a 25&nbsp;km grid — they cannot see the
+      radiative cooling that freezes a specific orchard. The system calibrates
+      ensemble models (ECMWF IFS &amp; AIFS, DWD ICON-EU) against the
+      on-site station sensor, blends them by likelihood, and turns the result
+      into frost forecast up to 5 nights ahead, enough time
+      to plan protection, not just react. On the three frost nights in the
+      archive the raw models said ≈0%; the calibrated system alerted on all
+      three.
+    </p>
+
+    <svg viewBox="0 0 920 220" role="img" aria-label="Weather models plus your orchard's data go into FrostCast, which produces the frost risk for tonight, shown on the dashboard and sent as an alert" style="width:100%;height:auto;font-size:16px;font-family:'Bradley Hand','Segoe Print','Comic Sans MS',cursive;">
+
+      <!-- weather models box (rough double stroke) -->
+      <g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+        <path d="M28,42 C85,38 150,40 206,43 C210,85 209,130 205,168 C145,172 80,171 26,167 C23,125 24,80 28,42 Z"/>
+        <path d="M30,45 C90,42 155,43 203,45 C206,88 206,128 203,165 C140,168 85,168 29,164 C27,122 26,82 30,45 Z" stroke-opacity="0.45"/>
+        <!-- sun -->
+        <circle cx="155" cy="70" r="11"/>
+        <path d="M155,52 L155,45 M170,58 L175,53 M173,70 L181,70 M170,83 L175,88 M140,58 L135,53 M137,70 L129,70"/>
+        <!-- cloud -->
+        <path d="M60,100 C54,86 68,76 81,80 C85,66 106,64 112,76 C126,72 137,84 130,96 C124,106 68,108 60,100 Z"/>
+        <!-- second small cloud -->
+        <path d="M120,116 C117,109 124,104 131,106 C133,99 144,98 147,104 C154,102 159,108 156,114 C152,119 124,120 120,116 Z"/>
+      </g>
+      <text x="117" y="152" text-anchor="middle" fill="currentColor">weather models</text>
+
+      <!-- plus (two rough strokes) -->
+      <g stroke="currentColor" stroke-width="3" stroke-linecap="round" fill="none">
+        <path d="M247,90 C246,102 246,114 248,126"/>
+        <path d="M229,108 C241,107 255,107 266,109"/>
+      </g>
+
+      <!-- orchard box -->
+      <g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+        <path d="M288,43 C340,39 400,41 444,44 C447,86 447,128 443,168 C395,171 340,170 286,166 C284,124 285,82 288,43 Z"/>
+        <path d="M290,46 C345,43 398,44 441,47 C444,88 443,126 441,164 C392,167 342,166 289,163 C287,121 287,84 290,46 Z" stroke-opacity="0.45"/>
+        <!-- thermometer -->
+        <path d="M328,68 C330,68 332,68 333,69 L333,112 M327,69 L327,112"/>
+        <path d="M330,124 m-9,0 a9,9 0 1,0 18,0 a9,9 0 1,0 -18,0"/>
+        <path d="M330,118 L330,92" stroke-width="3"/>
+        <path d="M334,78 L340,78 M334,90 L340,90 M334,102 L340,102"/>
+        <!-- grapes -->
+        <path d="M392,84 C396,76 402,72 409,70"/>
+        <circle cx="388" cy="96" r="7"/><circle cx="402" cy="94" r="7"/>
+        <circle cx="394" cy="109" r="7"/><circle cx="408" cy="107" r="7"/>
+        <circle cx="401" cy="121" r="7"/>
+        <path d="M403,72 C410,68 417,70 419,76 C413,80 406,78 403,72 Z"/>
+      </g>
+      <text x="365" y="152" text-anchor="middle" fill="currentColor">your orchard</text>
+
+      <!-- rough arrow -->
+      <g stroke="currentColor" stroke-width="2.2" stroke-linecap="round" fill="none">
+        <path d="M456,104 C476,102 496,103 514,105"/>
+        <path d="M504,97 C509,100 513,103 516,105 C512,108 508,111 503,114"/>
+      </g>
+
+      <!-- frost risk box (blue rough + hachure) -->
+      <g fill="none" stroke="#4d94cc" stroke-width="2" stroke-linecap="round">
+        <path d="M533,42 C595,38 660,40 712,43 C716,85 715,130 711,169 C650,173 585,172 531,168 C528,126 529,82 533,42 Z"/>
+        <path d="M536,45 C600,42 658,43 709,46 C712,88 711,128 708,166 C645,169 590,168 534,164 C532,122 532,84 536,45 Z" stroke-opacity="0.5"/>
+      </g>
+      <g stroke="#4d94cc" stroke-width="1" stroke-opacity="0.3">
+        <path d="M545,165 L640,44 M570,166 L665,45 M595,167 L690,46 M620,168 L708,55 M645,168 L710,85 M670,169 L711,115"/>
+      </g>
+      <g fill="none" stroke="#4d94cc" stroke-width="2" stroke-linecap="round">
+        <!-- snowflake -->
+        <path d="M622,62 L622,118 M598,76 L646,104 M646,76 L598,104"/>
+        <path d="M616,68 L622,74 L628,68 M616,112 L622,106 L628,112"/>
+      </g>
+      <text x="622" y="146" text-anchor="middle" fill="#4d94cc" font-weight="bold">frost risk</text>
+      <text x="622" y="166" text-anchor="middle" fill="#4d94cc" font-weight="bold">tonight</text>
+
+      <!-- arrows to outputs -->
+      <g stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none">
+        <path d="M724,82 C748,74 766,68 784,63 M773,60 C777,61 781,62 786,63 C784,67 782,70 780,74"/>
+        <path d="M724,128 C748,136 766,142 784,148 M779,138 C781,142 783,145 785,148 C781,150 776,152 772,153"/>
+      </g>
+
+      <!-- dashboard doodle -->
+      <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+        <path d="M816,72 C836,70 856,70 874,72"/>
+        <path d="M822,70 C822,62 821,54 822,47 M834,70 C834,58 833,46 834,34 M846,70 C846,63 845,56 846,50 M858,70 C858,60 857,50 858,41"/>
+      </g>
+      <text x="845" y="94" text-anchor="middle" fill="currentColor">dashboard</text>
+
+      <!-- bell doodle -->
+      <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+        <path d="M830,168 C830,150 834,138 845,136 C856,138 860,150 860,168 C864,169 866,171 865,173 C852,175 838,175 825,173 C824,171 826,169 830,168 Z"/>
+        <path d="M842,177 C843,180 847,180 848,177"/>
+        <path d="M868,146 C871,151 872,157 871,163 M874,140 C878,147 879,156 877,164"/>
+      </g>
+      <text x="845" y="200" text-anchor="middle" fill="currentColor">alert in time</text>
+    </svg>
+
+    <h2>What the service includes</h2>
+    <ul>
+      <li>
+        <strong>On-site sensor installation</strong> — temperature and humidity
+        in your orchard, the local truth every forecast is calibrated against.
+      </li>
+      <li>
+        <strong>Calibrated forecast system</strong> — global ensemble
+        models, bias- and spread-corrected for your site and blended into one
+        verified probability.
+      </li>
+      <li>
+        <strong>Real-time monitoring</strong> — a live dashboard, refreshed
+        every forecast cycle.
+      </li>
+      <li>
+        <strong>Alert system</strong> — WhatsApp/SMS the moment frost
+        probability crosses <em>your</em> cost/loss threshold, hours before the
+        minimum.
+      </li>
+    </ul>
+    <p class="site-line">
+      Case study site: Argamasilla de Alba (SIAR CR07) — grapevine, critical
+      temperature −1.5&thinsp;°C.
+    </p>
+
+    <h2>Verified against reality</h2>
+    <p>
+      The blue band is the model's own 90% confidence interval, checked against
+      two seasons of on-site data: nine nights out of ten the observed
+      temperature falls inside it.
+    </p>
+    <figure class="hero-chart">
+      <a href={dashboard_page} target="_blank" rel="noopener">
+        <img
+          src="/case-studies/frost/hero_band.svg"
+          alt="Observed temperatures vs the calibrated forecast with its 90% uncertainty band for the week of the 2026-03-30 frost — the observations stay inside the band and dip below the critical temperature on the frost night"
+          loading="lazy"
+        />
+      </a>
+      <figcaption>
+        One cold week from the archive: observed vs the forecast issued the
+        morning before, with the frost night caught below −1.5&thinsp;°C.
+      </figcaption>
+    </figure>
+    <p class="dash-link">
+      <a href={dashboard_page} target="_blank" rel="noopener"
+        >Explore the live dashboard — every metric, updated each forecast cycle
+        →</a
+      >
+    </p>
+  </article>
+</Layout>
+
+<style>
+  .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    opacity: 0.7;
+  }
+  .stats {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 0;
+  }
+  .stats strong {
+    display: block;
+    font-size: 1.6rem;
+  }
+  .hero-chart {
+    margin: 1.5rem 0;
+  }
+  .hero-chart img {
+    width: 100%;
+    height: auto;
+    border: 1px solid color-mix(in srgb, currentColor 15%, transparent);
+    border-radius: 8px;
+  }
+  @media (prefers-color-scheme: dark) {
+    /* ponytail: filter approximation; swap for a real dark variant from the
+       figures pipeline if the colors ever matter exactly */
+    .hero-chart img {
+      filter: invert(0.9) hue-rotate(180deg);
+    }
+  }
+  .hero-chart figcaption {
+    font-size: 0.9rem;
+    opacity: 0.7;
+    margin-top: 0.5rem;
+  }
+  .dash-link {
+    font-weight: 600;
+  }
+  .site-line {
+    font-size: 0.9rem;
+    opacity: 0.7;
+  }
+</style>
