@@ -2,7 +2,10 @@
 import '@fontsource-variable/inter';
 import '@fontsource-variable/source-serif-4';
 
-const { title = 'Cantarella Labs', description = '' } = Astro.props;
+const { title = 'Cantarella Labs', description = '', image = '/og-default.jpg' } = Astro.props;
+// social crawlers (LinkedIn etc.) need absolute URLs and can't render SVG
+const ogImage = new URL(image.endsWith('.svg') ? '/og-default.jpg' : image, Astro.site);
+const canonical = new URL(Astro.url.pathname, Astro.site);
 const nav = [
   { href: '/', label: 'Home' },
   { href: '/services/', label: 'Services' },
@@ -23,6 +26,14 @@ const path = Astro.url.pathname;
     <meta name="generator" content={Astro.generator} />
     {description && <meta name="description" content={description} />}
     <title>{title}</title>
+    <link rel="canonical" href={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Cantarella Labs" />
+    <meta property="og:title" content={title} />
+    {description && <meta property="og:description" content={description} />}
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
     <script is:inline>document.documentElement.classList.add('js');</script>
   </head>
   <body>

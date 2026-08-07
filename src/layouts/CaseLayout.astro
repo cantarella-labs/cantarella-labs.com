@@ -7,7 +7,7 @@ const service = services.find((s) => s.id === meta.service);
 const hasAside = Boolean(service || meta.facts?.length || meta.links?.length);
 ---
 
-<Layout title={title} description={description}>
+<Layout title={title} description={description} image={meta.image}>
   <div class:list={["case", { "has-aside": hasAside }]}>
     <article class="case-body">
       <slot />
