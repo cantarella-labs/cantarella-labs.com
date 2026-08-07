@@ -2,6 +2,9 @@
 import Layout from "../../layouts/Layout.astro";
 
 export const meta = {
+  featured: true,
+  service: "forecasting",
+  image: "/case-studies/frost/hero_band.svg",
   title: "Frost forecasting for orchards in Castilla La Mancha, Spain",
   blurb:
     "Global weather models, calibrated against on-site sensor data and blended into one verified frost probability — alerts up to 5 nights ahead.",
@@ -199,8 +202,12 @@ const dashboard_page = "https://frost.cantarellalabs.com/";
     margin: 1.5rem 0;
   }
   .hero-chart img {
-    width: 100%;
+    display: block;
+    max-width: 100%;
+    max-height: 65vh;
+    width: auto;
     height: auto;
+    margin: 0 auto;
     border: 1px solid color-mix(in srgb, currentColor 15%, transparent);
     border-radius: 8px;
   }

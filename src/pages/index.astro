@@ -1,17 +1,25 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import CaseCard from "../components/CaseCard.astro";
+import { services } from "../services";
 
-const pages = import.meta.glob<{ meta?: { title: string; blurb: string } }>(
-  "./case-studies/*.astro",
-  { eager: true },
-);
+const pages = import.meta.glob<{
+  meta?: {
+    title: string;
+    blurb: string;
+    image?: string;
+    imageBg?: string;
+    featured?: boolean;
+  };
+}>("./case-studies/*.astro", { eager: true });
 const cases = Object.entries(pages).flatMap(([path, page]) =>
-  page.meta
+  page.meta?.featured
     ? [
         {
           href: path.replace("./", "/").replace(".astro", "/"),
           title: page.meta.title,
-          body: page.meta.blurb,
+          image: page.meta.image,
+          imageBg: page.meta.imageBg,
         },
       ]
     : [],
@@ -23,42 +31,68 @@ const cases = Object.entries(pages).flatMap(([path, page]) =>
   description="Independent consultancy. TODO: one-line description of what you do and for whom."
 >
   <section class="hero">
-    <h1>TODO: What you do, in one line.</h1>
-    <p>TODO: who it's for and the outcome you deliver. Keep it to two sentences.</p>
+    <h1>Water questions, answered with data and models</h1>
+    <p>
+      Independent hydrogeology consultancy: measurement, modeling and
+      forecasting.
+    </p>
     <a class="cta" href="/contact/">Get in touch</a>
   </section>
 
   <section>
     <h2>How I can help</h2>
-    <ul class="cards">
-      <li><h3>TODO: Service 1</h3><p>TODO: short description.</p></li>
-      <li><h3>TODO: Service 2</h3><p>TODO: short description.</p></li>
-      <li><h3>TODO: Service 3</h3><p>TODO: short description.</p></li>
-    </ul>
+    <div class="case-row">
+      {
+        services.map((s) => (
+          <CaseCard
+            href={`/services/#${s.id}`}
+            title={s.title}
+            image={s.image}
+          />
+        ))
+      }
+    </div>
+    <p><a href="/services/">See all services &rarr;</a></p>
   </section>
 
   <section>
     <h2>Case studies</h2>
-    <ul class="cards">
-      {cases.map((c) => (
-        <li>
-          <h3><a href={c.href}>{c.title}</a></h3>
-          <p>{c.body}</p>
-        </li>
-      ))}
-    </ul>
+    <div class="case-row">
+      {
+        cases.map((c) => (
+          <CaseCard
+            href={c.href}
+            title={c.title}
+            image={c.image}
+            imageBg={c.imageBg}
+          />
+        ))
+      }
+    </div>
     <p><a href="/case-studies/">See all case studies &rarr;</a></p>
   </section>
 </Layout>
 
 <style>
-  .hero { padding: 2rem 0 3rem; }
-  .hero h1 { font-size: 2.5rem; line-height: 1.15; }
-  .cta {
-    display: inline-block; margin-top: 1rem; padding: 0.7rem 1.4rem;
-    background: var(--accent); color: #fff; border-radius: 6px; text-decoration: none;
+  .hero {
+    padding: 2rem 0 3rem;
   }
-  .cards { list-style: none; padding: 0; display: grid; gap: 1.25rem; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); }
-  .cards li { border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; }
-  .cards h3 { margin-top: 0; }
+  .hero h1 {
+    font-size: 2.5rem;
+    line-height: 1.15;
+  }
+  .cta {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.7rem 1.4rem;
+    background: var(--accent);
+    color: #fff;
+    border-radius: 6px;
+    text-decoration: none;
+  }
+  .case-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
 </style>

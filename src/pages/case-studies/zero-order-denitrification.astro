@@ -1,0 +1,102 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+export const meta = {
+  featured: true,
+  service: "modeling",
+  image: "/case-studies/zero-order-denitrification/thumb.png",
+  title: "Why nitrate degrades at a constant rate in aquifers",
+  blurb:
+    "A closed-form reactive-transport model showing that the sediment matrix — not nitrate — sets the pace of denitrification. Published in ACS ES&T Water (2025).",
+};
+
+const doi = "https://doi.org/10.1021/acsestwater.4c01232";
+---
+
+<Layout
+  title="Case study: Zero-order nitrate reduction in aquifers"
+  description={meta.blurb}
+>
+  <article>
+    <p class="eyebrow">Case study · Publication · Reactive transport</p>
+    <h1>Why nitrate degrades at a constant rate in aquifers</h1>
+
+    <p>
+      Nitrate removal in aquifers involves flow, mass transfer between water
+      and sediment, and microbial growth — yet at field sites the degradation
+      rate often looks strikingly simple: a constant, zero-order rate,
+      independent of how much nitrate is present. Practitioners use that
+      constant every day; the theory said it shouldn't be that simple.
+    </p>
+
+    <h2>What we did</h2>
+    <p>
+      We derived the steady-state concentrations of biomass, electron
+      acceptors and electron donors in closed form, for denitrification fueled
+      by organic carbon released from the sediment matrix, and confirmed the
+      result with full numerical simulations. The math shows the bottleneck:
+      the microbially mediated hydrolysis step that releases the electron
+      donor from the matrix limits the whole chain. Neither the biomass nor
+      the reduction rate depends on the nitrate concentration — the
+      <em>electron-yielding capacity of the matrix</em> sets the pace.
+    </p>
+
+    <figure>
+      <video
+        src="/case-studies/zero-order-denitrification/steady_state_animation.mp4"
+        poster="/case-studies/zero-order-denitrification/thumb.png"
+        autoplay
+        loop
+        muted
+        playsinline
+        width="960"
+        height="720"
+      ></video>
+      <figcaption>
+        The numerical model in action (video S2 of the paper): electron
+        acceptor, reaction rate, electron donor and biomass along the flow
+        path — the transient profiles converge to the closed-form analytical
+        prediction (dashed red).
+      </figcaption>
+    </figure>
+
+    <h2>Why it matters</h2>
+    <p>
+      It gives a mechanistic justification for the zero-order rates used in
+      site assessments — and tells you what to measure to predict them: the
+      processes controlling microbial access to solid-phase electron donors,
+      not the nitrate itself. The result applies to any dissolved electron
+      acceptor reacting with donors released from the matrix.
+    </p>
+
+    <p class="cite">
+      Cantarella, V., Mellage, A., &amp; Cirpka, O. A. (2025). The
+      Electron-Yielding Capacity of the Matrix Can Explain Apparent Zero-Order
+      Reduction of Electron-Acceptors in Aquifers at Steady State.
+      <em>ACS ES&amp;T Water</em>, 5(4), 1889–1896.
+      <a href={doi} target="_blank" rel="noopener">Read the paper (open access) &rarr;</a>
+    </p>
+  </article>
+</Layout>
+
+<style>
+  .eyebrow { text-transform: uppercase; letter-spacing: 0.06em; opacity: 0.7; }
+  figure { margin: 1.5rem 0; }
+  figure video {
+    display: block;
+    max-width: 100%;
+    max-height: 65vh;
+    width: auto;
+    height: auto;
+    margin: 0 auto;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: #fff;
+  }
+  figcaption { font-size: 0.9rem; opacity: 0.7; margin-top: 0.5rem; }
+  .cite {
+    border-top: 1px solid var(--border);
+    padding-top: 1rem;
+    font-size: 0.95rem;
+  }
+</style>

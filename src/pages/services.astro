@@ -1,0 +1,62 @@
+---
+import Layout from "../layouts/Layout.astro";
+import CaseCard from "../components/CaseCard.astro";
+import { services } from "../services";
+
+const pages = import.meta.glob<{
+  meta?: {
+    service?: string;
+    title: string;
+    blurb: string;
+    image?: string;
+    imageBg?: string;
+  };
+}>("./case-studies/*.astro", { eager: true });
+const cases = Object.entries(pages).flatMap(([path, page]) =>
+  page.meta
+    ? [
+        {
+          href: path.replace("./", "/").replace(".astro", "/"),
+          service: page.meta.service,
+          title: page.meta.title,
+          image: page.meta.image,
+          imageBg: page.meta.imageBg,
+        },
+      ]
+    : [],
+);
+---
+
+<Layout title="Services — Cantarella Labs" description="Forecasting, groundwater modeling and field instrumentation: data and model-driven answers to water challenges.">
+  <h1>Services</h1>
+  {services.map((s) => {
+    const related = cases.filter((c) => c.service === s.id);
+    return (
+      <section class="service" id={s.id}>
+        <h2>{s.title}</h2>
+        <p>{s.body}</p>
+        {related.length > 0 && (
+          <div class="cases">
+            {related.map((c) => (
+              <CaseCard href={c.href} title={c.title} image={c.image} imageBg={c.imageBg} />
+            ))}
+          </div>
+        )}
+      </section>
+    );
+  })}
+  <p><a class="cta" href="/contact/">Discuss a project</a></p>
+</Layout>
+
+<style>
+  .service {
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 0 1.5rem;
+  }
+  .service:last-of-type { border-bottom: none; }
+  .cases { display: flex; flex-wrap: wrap; gap: 1rem; }
+  .cta {
+    display: inline-block; margin-top: 1rem; padding: 0.7rem 1.4rem;
+    background: var(--accent); color: #fff; border-radius: 6px; text-decoration: none;
+  }
+</style>

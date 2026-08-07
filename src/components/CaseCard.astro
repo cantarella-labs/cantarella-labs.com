@@ -1,0 +1,46 @@
+---
+const { href, title, image, imageBg, placeholder = "in progress" } = Astro.props;
+---
+
+<a class="case-card" href={href}>
+  {image
+    ? <img src={image} alt="" loading="lazy" style={imageBg && `background:${imageBg}`} />
+    : <span class="placeholder">{placeholder}</span>}
+  <span class="title">{title}</span>
+</a>
+
+<style>
+  .case-card {
+    display: block;
+    width: 14rem;
+    max-width: 100%;
+    text-decoration: none;
+    color: inherit;
+  }
+  .case-card img,
+  .placeholder {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: #fff;
+  }
+  .placeholder {
+    display: grid;
+    place-items: center;
+    color: var(--muted);
+    font-size: 0.85rem;
+    background:
+      repeating-linear-gradient(45deg, transparent, transparent 12px, var(--border) 12px, var(--border) 13px),
+      var(--bg);
+  }
+  .title {
+    display: block;
+    margin-top: 0.4rem;
+    font-size: 0.9rem;
+    line-height: 1.35;
+  }
+  .case-card:hover .title { color: var(--accent); }
+</style>
