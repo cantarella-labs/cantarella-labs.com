@@ -2,7 +2,7 @@
 import '@fontsource-variable/inter';
 import '@fontsource-variable/source-serif-4';
 
-const { title = 'Cantarella Labs', description = '', image = '/og-default.jpg' } = Astro.props;
+const { title = 'Cantarella Labs', description = '', image = '/og-default.jpg', noindex = false } = Astro.props;
 // social crawlers (LinkedIn etc.) need absolute URLs and can't render SVG
 const ogImage = new URL(image.endsWith('.svg') ? '/og-default.jpg' : image, Astro.site);
 const canonical = new URL(Astro.url.pathname, Astro.site);
@@ -34,6 +34,7 @@ const path = Astro.url.pathname;
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImage} />
     <meta name="twitter:card" content="summary_large_image" />
+    {noindex && <meta name="robots" content="noindex" />}
     <script is:inline>document.documentElement.classList.add('js');</script>
   </head>
   <body>
@@ -52,6 +53,9 @@ const path = Astro.url.pathname;
 
     <footer>
       <p>&copy; {new Date().getFullYear()} Cantarella Labs</p>
+      <p class="legal">
+        <a href="/impressum/">Impressum</a> · <a href="/datenschutz/">Datenschutz</a>
+      </p>
     </footer>
 
     <script>
@@ -209,5 +213,9 @@ const path = Astro.url.pathname;
     max-width: var(--max); width: 100%; margin: 0 auto;
     padding: 2rem 1.5rem; color: var(--muted); font-size: 0.9rem;
     border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;
   }
+  footer p { margin: 0; }
+  footer a { color: var(--muted); }
+  footer a:hover { color: var(--accent); }
 </style>
