@@ -1,5 +1,5 @@
 ---
-import Layout from "../../layouts/Layout.astro";
+import CaseLayout from "../../layouts/CaseLayout.astro";
 
 export const meta = {
   featured: true,
@@ -7,17 +7,27 @@ export const meta = {
   image: "/case-studies/zero-order-denitrification/thumb.png",
   title: "Why nitrate degrades at a constant rate in aquifers",
   blurb:
-    "A closed-form reactive-transport model showing that the sediment matrix — not nitrate — sets the pace of denitrification. Published in ACS ES&T Water (2025).",
+    "A closed-form reactive-transport model showing that the sediment matrix sets the pace of denitrification. Published in ACS ES&T Water (2025).",
+  facts: [
+    { label: "Published in", value: "ACS ES&T Water (2025)" },
+    { label: "Result", value: "Simple rate equation at steady state" },
+  ],
+  links: [
+    {
+      label: "Paper (open access)",
+      href: "https://doi.org/10.1021/acsestwater.4c01232",
+    },
+  ],
 };
 
 const doi = "https://doi.org/10.1021/acsestwater.4c01232";
 ---
 
-<Layout
+<CaseLayout
   title="Case study: Zero-order nitrate reduction in aquifers"
   description={meta.blurb}
+  meta={meta}
 >
-  <article>
     <p class="eyebrow">Case study · Publication · Reactive transport</p>
     <h1>Why nitrate degrades at a constant rate in aquifers</h1>
 
@@ -76,27 +86,4 @@ const doi = "https://doi.org/10.1021/acsestwater.4c01232";
       <em>ACS ES&amp;T Water</em>, 5(4), 1889–1896.
       <a href={doi} target="_blank" rel="noopener">Read the paper (open access) &rarr;</a>
     </p>
-  </article>
-</Layout>
-
-<style>
-  .eyebrow { text-transform: uppercase; letter-spacing: 0.06em; opacity: 0.7; }
-  figure { margin: 1.5rem 0; }
-  figure video {
-    display: block;
-    max-width: 100%;
-    max-height: 65vh;
-    width: auto;
-    height: auto;
-    margin: 0 auto;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    background: #fff;
-  }
-  figcaption { font-size: 0.9rem; opacity: 0.7; margin-top: 0.5rem; }
-  .cite {
-    border-top: 1px solid var(--border);
-    padding-top: 1rem;
-    font-size: 0.95rem;
-  }
-</style>
+</CaseLayout>

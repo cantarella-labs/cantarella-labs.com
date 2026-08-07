@@ -29,14 +29,22 @@ const cases = Object.entries(pages).flatMap(([path, page]) =>
 
 <Layout title="Services — Cantarella Labs" description="Forecasting, groundwater modeling and field instrumentation: data and model-driven answers to water challenges.">
   <h1>Services</h1>
+  <nav class="service-nav" aria-label="Services on this page">
+    {services.map((s) => (
+      <a class="chip" href={`#${s.id}`}>{s.title}</a>
+    ))}
+  </nav>
   {services.map((s) => {
     const related = cases.filter((c) => c.service === s.id);
     return (
-      <section class="service" id={s.id}>
-        <h2>{s.title}</h2>
-        <p>{s.body}</p>
+      <section class="service" id={s.id} data-reveal>
+        <div class="service-text">
+          <h2>{s.title}</h2>
+          <p>{s.body}</p>
+          <p class="discuss"><a href="/contact/">Discuss this &rarr;</a></p>
+        </div>
         {related.length > 0 && (
-          <div class="cases">
+          <div class:list={["cases", { single: related.length === 1 }]}>
             {related.map((c) => (
               <CaseCard href={c.href} title={c.title} image={c.image} imageBg={c.imageBg} />
             ))}
@@ -49,14 +57,36 @@ const cases = Object.entries(pages).flatMap(([path, page]) =>
 </Layout>
 
 <style>
+  .service-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0.5rem 0 1.5rem;
+  }
   .service {
     border-bottom: 1px solid var(--border);
-    padding: 1rem 0 1.5rem;
+    padding: 2rem 0 2.5rem;
+    scroll-margin-top: 2rem;
+    display: grid;
+    gap: 2rem;
+    align-items: center;
+  }
+  @media (min-width: 800px) {
+    .service {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+      gap: 2.5rem;
+    }
+    .service:nth-of-type(even) .service-text { order: 2; }
   }
   .service:last-of-type { border-bottom: none; }
-  .cases { display: flex; flex-wrap: wrap; gap: 1rem; }
-  .cta {
-    display: inline-block; margin-top: 1rem; padding: 0.7rem 1.4rem;
-    background: var(--accent); color: #fff; border-radius: 6px; text-decoration: none;
+  .service h2 { margin-top: 0; }
+  .discuss { font-weight: 600; }
+  .discuss a { text-decoration: none; }
+  .discuss a:hover { text-decoration: underline; }
+  .cases {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+    gap: 1.25rem;
   }
+  .cases.single { max-width: 24rem; }
 </style>

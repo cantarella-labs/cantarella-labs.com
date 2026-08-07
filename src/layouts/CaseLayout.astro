@@ -1,0 +1,244 @@
+---
+import Layout from "./Layout.astro";
+import { services } from "../services";
+
+const { title, description, meta } = Astro.props;
+const service = services.find((s) => s.id === meta.service);
+const hasAside = Boolean(service || meta.facts?.length || meta.links?.length);
+---
+
+<Layout title={title} description={description}>
+  <div class:list={["case", { "has-aside": hasAside }]}>
+    <article class="case-body">
+      <slot />
+    </article>
+    {hasAside && (
+      <aside class="at-a-glance" aria-label="At a glance">
+        <h2>At a glance</h2>
+        {service && (
+          <p><a class="chip" href={`/services/#${service.id}`}>{service.title}</a></p>
+        )}
+        {meta.facts?.length > 0 && (
+          <dl>
+            {meta.facts.map((f: { label: string; value: string }) => (
+              <div class="fact">
+                <dt>{f.label}</dt>
+                <dd>{f.value}</dd>
+              </div>
+            ))}
+          </dl>
+        )}
+        {meta.links?.length > 0 && (
+          <ul class="links">
+            {meta.links.map((l: { label: string; href: string }) => (
+              <li><a href={l.href} target="_blank" rel="noopener">{l.label} &rarr;</a></li>
+            ))}
+          </ul>
+        )}
+      </aside>
+    )}
+  </div>
+
+  <dialog class="lightbox">
+    <div class="lb-inner">
+      <button class="lb-close" aria-label="Close">&times;</button>
+      <img alt="" />
+      <p class="lb-caption"></p>
+    </div>
+  </dialog>
+</Layout>
+
+<script>
+  const dialog = document.querySelector('dialog.lightbox') as HTMLDialogElement;
+  const lbImg = dialog.querySelector('img') as HTMLImageElement;
+  const lbCaption = dialog.querySelector('.lb-caption') as HTMLElement;
+
+  function open(img: HTMLImageElement) {
+    lbImg.src = img.currentSrc || img.src;
+    lbImg.alt = img.alt;
+    const cs = getComputedStyle(img);
+    lbImg.style.background = cs.background;
+    lbImg.style.filter = cs.filter;
+    lbCaption.textContent =
+      img.closest('figure')?.querySelector('figcaption')?.textContent?.trim() ?? '';
+    dialog.showModal();
+  }
+
+  for (const img of document.querySelectorAll<HTMLImageElement>('.case-body figure img')) {
+    if (img.closest('a')) continue;
+    img.tabIndex = 0;
+    img.setAttribute('role', 'button');
+    img.setAttribute('aria-label', 'Enlarge figure');
+    img.addEventListener('click', () => open(img));
+    img.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        open(img);
+      }
+    });
+  }
+
+  dialog.querySelector('.lb-close')?.addEventListener('click', () => dialog.close());
+  dialog.addEventListener('click', (e) => {
+    if (e.target === dialog) dialog.close();
+  });
+</script>
+
+<style>
+  .case {
+    display: grid;
+    gap: 2rem;
+  }
+  @media (min-width: 900px) {
+    .case.has-aside {
+      grid-template-columns: minmax(0, 1fr) 17rem;
+      gap: 3rem;
+    }
+    .at-a-glance {
+      position: sticky;
+      top: 2rem;
+      align-self: start;
+    }
+  }
+  .at-a-glance {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem 1.4rem;
+    background: color-mix(in srgb, var(--accent) 4%, var(--bg));
+    height: fit-content;
+  }
+  .at-a-glance h2 {
+    margin: 0 0 0.75rem;
+    font-size: 1.1rem;
+  }
+  .at-a-glance dl { margin: 1rem 0 0; }
+  .fact { margin-bottom: 0.9rem; }
+  .fact dt {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+  }
+  .fact dd {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 600;
+  }
+  .links {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0 0;
+  }
+  .links li { margin-bottom: 0.4rem; }
+  .links a { font-weight: 600; text-decoration: none; }
+  .links a:hover { text-decoration: underline; }
+
+  /* shared case-study prose/figure styles (slotted content needs :global) */
+  .case-body :global(.eyebrow) {
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    opacity: 0.7;
+  }
+  .case-body :global(figure) { margin: 1.5rem 0; }
+  .case-body :global(figure img),
+  .case-body :global(figure video) {
+    display: block;
+    max-width: 100%;
+    max-height: 65vh;
+    width: auto;
+    height: auto;
+    margin: 0 auto;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: #fff;
+  }
+  .case-body :global(figure img) {
+    cursor: zoom-in;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .case-body :global(figure img:hover) {
+    box-shadow: 0 6px 20px rgb(0 0 0 / 0.15);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .case-body :global(figure img:hover) { transform: scale(1.01); }
+  }
+  .case-body :global(figure.figure--dark img) { background: #0f172a; }
+  @media (prefers-color-scheme: dark) {
+    .case-body :global(figure.figure--invertible img) {
+      filter: invert(0.9) hue-rotate(180deg);
+    }
+  }
+  .case-body :global(figcaption) {
+    font-size: 0.9rem;
+    opacity: 0.7;
+    margin-top: 0.5rem;
+  }
+  .case-body :global(.cite) {
+    border-top: 1px solid var(--border);
+    padding-top: 1rem;
+    font-size: 0.95rem;
+  }
+  .case-body :global(.stats) {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 0;
+  }
+  .case-body :global(.stats strong) {
+    display: block;
+    font-size: 1.6rem;
+  }
+
+  /* lightbox */
+  .lightbox {
+    max-width: min(92vw, 70rem);
+    border: none;
+    border-radius: 12px;
+    background: var(--bg);
+    color: var(--ink);
+    padding: 0;
+  }
+  .lightbox::backdrop { background: rgb(0 0 0 / 0.6); }
+  .lb-inner { padding: 1rem; }
+  .lightbox img {
+    display: block;
+    max-width: 100%;
+    max-height: 82vh;
+    margin: 0 auto;
+    border-radius: 8px;
+  }
+  .lb-caption {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin: 0.6rem 0 0;
+  }
+  .lb-close {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 2.2rem;
+    height: 2.2rem;
+    border: none;
+    border-radius: 50%;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 1.3rem;
+    line-height: 1;
+    cursor: pointer;
+    border: 1px solid var(--border);
+  }
+  .lb-close:hover { color: var(--accent); border-color: var(--accent); }
+  @media (prefers-reduced-motion: no-preference) {
+    .lightbox[open] { animation: lb-in 0.18s ease; }
+    @keyframes lb-in {
+      from { opacity: 0; transform: scale(0.97); }
+      to { opacity: 1; transform: scale(1); }
+    }
+  }
+</style>
+
+<style is:global>
+  body:has(dialog[open]) { overflow: hidden; }
+</style>

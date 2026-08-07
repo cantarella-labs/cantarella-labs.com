@@ -1,30 +1,74 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import CaseCard from "../../components/CaseCard.astro";
 
-const pages = import.meta.glob<{ meta?: { title: string; blurb: string } }>(
-  "./*.astro",
-  { eager: true },
-);
-const cases = Object.entries(pages).flatMap(([path, page]) =>
-  page.meta
-    ? [
-        {
-          href: `/case-studies/${path.replace("./", "").replace(".astro", "")}/`,
-          title: page.meta.title,
-          body: page.meta.blurb,
-        },
-      ]
-    : [],
-);
+const tagNames: Record<string, string> = {
+  forecasting: "Forecasting",
+  modeling: "Modeling",
+  instrumentation: "Instrumentation",
+  hydrogeology: "Hydrogeology",
+  "water-resources": "Water resources",
+};
+
+const pages = import.meta.glob<{
+  meta?: {
+    title: string;
+    blurb: string;
+    image?: string;
+    imageBg?: string;
+    service?: string;
+    featured?: boolean;
+  };
+}>("./*.astro", { eager: true });
+const cases = Object.entries(pages)
+  .flatMap(([path, page]) =>
+    page.meta
+      ? [
+          {
+            href: `/case-studies/${path.replace("./", "").replace(".astro", "")}/`,
+            title: page.meta.title,
+            blurb: page.meta.blurb,
+            image: page.meta.image,
+            imageBg: page.meta.imageBg,
+            tag: page.meta.service ? tagNames[page.meta.service] : undefined,
+            featured: page.meta.featured ?? false,
+          },
+        ]
+      : [],
+  )
+  .sort((a, b) => Number(b.featured) - Number(a.featured));
 ---
 
 <Layout title="Case Studies — Cantarella Labs" description="Selected services and projects.">
   <h1>Case Studies</h1>
-  {cases.map((c) => (
-    <section>
-      <h2><a href={c.href}>{c.title}</a></h2>
-      <p>{c.body}</p>
-    </section>
-  ))}
-  <p><a href="/contact/">Discuss a project &rarr;</a></p>
+  <p class="intro">Selected projects bringing technology and groundwater science closer.</p>
+  <div class="case-grid" data-reveal-group>
+    {cases.map((c) => (
+      <CaseCard
+        variant="rich"
+        href={c.href}
+        title={c.title}
+        blurb={c.blurb}
+        image={c.image}
+        imageBg={c.imageBg}
+        tag={c.tag}
+      />
+    ))}
+  </div>
+  <p class="outro"><a href="/contact/">Discuss a project &rarr;</a></p>
 </Layout>
+
+<style>
+  .intro { color: var(--muted); margin-top: 0; }
+  .case-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(19rem, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  @media (min-width: 900px) {
+    .case-grid { grid-template-columns: repeat(3, 1fr); }
+    .case-grid > :global(:first-child) { grid-column: span 2; }
+  }
+  .outro { margin-top: 2.5rem; font-weight: 600; }
+</style>

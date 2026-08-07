@@ -1,21 +1,52 @@
 ---
-const { href, title, image, imageBg, placeholder = "in progress" } = Astro.props;
+const {
+  href,
+  title,
+  image,
+  imageBg,
+  placeholder = "in progress",
+  variant = "thumb",
+  blurb,
+  tag,
+  date,
+} = Astro.props;
 ---
 
-<a class="case-card" href={href}>
-  {image
-    ? <img src={image} alt="" loading="lazy" style={imageBg && `background:${imageBg}`} />
-    : <span class="placeholder">{placeholder}</span>}
-  <span class="title">{title}</span>
+<a class:list={["case-card", variant]} href={href}>
+  <span class="media">
+    {image
+      ? <img src={image} alt="" loading="lazy" style={imageBg && `background:${imageBg}`} />
+      : <span class="placeholder">{placeholder}</span>}
+  </span>
+  {variant === "rich" ? (
+    <span class="body">
+      {tag && <span class="chip">{tag}</span>}
+      <span class="title">{title}</span>
+      {blurb && <span class="blurb">{blurb}</span>}
+      {date && <span class="date">{date}</span>}
+    </span>
+  ) : (
+    <span class="title">{title}</span>
+  )}
 </a>
 
 <style>
   .case-card {
     display: block;
-    width: 14rem;
-    max-width: 100%;
+    width: 100%;
     text-decoration: none;
     color: inherit;
+    transition: transform 0.15s ease;
+  }
+  .case-card:hover { color: inherit; }
+  .media {
+    display: block;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.06);
+    transition: box-shadow 0.15s ease, border-color 0.15s ease;
   }
   .case-card img,
   .placeholder {
@@ -23,9 +54,10 @@ const { href, title, image, imageBg, placeholder = "in progress" } = Astro.props
     width: 100%;
     aspect-ratio: 16 / 10;
     object-fit: cover;
-    border: 1px solid var(--border);
-    border-radius: 8px;
     background: #fff;
+  }
+  .case-card img {
+    transition: transform 0.3s ease;
   }
   .placeholder {
     display: grid;
@@ -36,6 +68,10 @@ const { href, title, image, imageBg, placeholder = "in progress" } = Astro.props
       repeating-linear-gradient(45deg, transparent, transparent 12px, var(--border) 12px, var(--border) 13px),
       var(--bg);
   }
+  .case-card:hover .media {
+    box-shadow: 0 4px 14px rgb(0 0 0 / 0.12);
+    border-color: var(--accent);
+  }
   .title {
     display: block;
     margin-top: 0.4rem;
@@ -43,4 +79,60 @@ const { href, title, image, imageBg, placeholder = "in progress" } = Astro.props
     line-height: 1.35;
   }
   .case-card:hover .title { color: var(--accent); }
+
+  /* rich variant */
+  .rich {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--ink) 3%, var(--bg));
+    overflow: hidden;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  }
+  .rich .media {
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .rich:hover {
+    box-shadow: 0 6px 18px rgb(0 0 0 / 0.12);
+    border-color: var(--accent);
+  }
+  .rich .body {
+    display: grid;
+    gap: 0.4rem;
+    padding: 1rem 1.1rem 1.2rem;
+    justify-items: start;
+  }
+  .rich .title {
+    margin-top: 0;
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+  .rich .blurb {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    color: var(--muted);
+    font-size: 0.92rem;
+  }
+  .rich .date {
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+  .chip {
+    display: inline-block;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0.15rem 0.65rem;
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .case-card:hover { transform: translateY(-3px); }
+    .case-card:hover img { transform: scale(1.05); }
+  }
 </style>

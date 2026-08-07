@@ -18,30 +18,47 @@ const cases = Object.entries(pages).flatMap(([path, page]) =>
         {
           href: path.replace("./", "/").replace(".astro", "/"),
           title: page.meta.title,
+          blurb: page.meta.blurb,
           image: page.meta.image,
           imageBg: page.meta.imageBg,
         },
       ]
     : [],
 );
+const heroCase = cases.find((c) => c.href.includes("frost")) ?? cases[0];
 ---
 
 <Layout
   title="Cantarella Labs — Consulting"
-  description="Independent consultancy. TODO: one-line description of what you do and for whom."
+  description="Independent hydrogeology consultancy: measurement, modeling and
+      forecasting."
 >
   <section class="hero">
-    <h1>Water questions, answered with data and models</h1>
-    <p>
-      Independent hydrogeology consultancy: measurement, modeling and
-      forecasting.
-    </p>
-    <a class="cta" href="/contact/">Get in touch</a>
+    <div class="hero-text">
+      <h1>Water questions, answered with data and models</h1>
+      <p>
+        Independent hydrogeology consultancy: adding technology and scientific computing to water consulting services
+         for cheaper and more precise answers
+      </p>
+      <p class="hero-actions">
+        <a class="cta" href="/contact/">Get in touch</a>
+        <a class="secondary" href="/case-studies/">See case studies &rarr;</a>
+      </p>
+    </div>
+    {heroCase && (
+      <a class="hero-visual" href={heroCase.href}>
+        <span class="media">
+          <img src={heroCase.image} alt="" style={heroCase.imageBg && `background:${heroCase.imageBg}`} />
+        </span>
+        <span class="chip">Featured case study</span>
+        <span class="hero-visual-title">{heroCase.title}</span>
+      </a>
+    )}
   </section>
 
   <section>
     <h2>How I can help</h2>
-    <div class="case-row">
+    <div class="card-grid" data-reveal-group>
       {
         services.map((s) => (
           <CaseCard
@@ -57,12 +74,14 @@ const cases = Object.entries(pages).flatMap(([path, page]) =>
 
   <section>
     <h2>Case studies</h2>
-    <div class="case-row">
+    <div class="card-grid--lg" data-reveal-group>
       {
         cases.map((c) => (
           <CaseCard
+            variant="rich"
             href={c.href}
             title={c.title}
+            blurb={c.blurb}
             image={c.image}
             imageBg={c.imageBg}
           />
@@ -75,24 +94,81 @@ const cases = Object.entries(pages).flatMap(([path, page]) =>
 
 <style>
   .hero {
-    padding: 2rem 0 3rem;
+    display: grid;
+    gap: 3rem;
+    align-items: center;
+    padding: 3.5rem 1.5rem;
+    margin: -1.5rem calc(50% - 50vw) 1.5rem;
+    padding-inline: max(1.5rem, calc(50vw - var(--max) / 2 + 1.5rem));
+    background: color-mix(in srgb, var(--accent) 5%, var(--bg));
+    border-bottom: 1px solid var(--border);
+  }
+  @media (min-width: 860px) {
+    .hero { grid-template-columns: 1.05fr 0.95fr; }
   }
   .hero h1 {
-    font-size: 2.5rem;
-    line-height: 1.15;
+    margin: 0 0 0.5rem;
   }
-  .cta {
-    display: inline-block;
-    margin-top: 1rem;
-    padding: 0.7rem 1.4rem;
-    background: var(--accent);
-    color: #fff;
-    border-radius: 6px;
+  .hero-text > p {
+    font-size: 1.15rem;
+    color: var(--muted);
+    margin-top: 0;
+  }
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+  }
+  .hero-actions .secondary {
+    font-weight: 600;
     text-decoration: none;
   }
-  .case-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
+  .hero-actions .secondary:hover { text-decoration: underline; }
+  .hero-visual {
+    display: grid;
+    gap: 0.4rem;
+    justify-items: start;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.15s ease;
   }
+  .hero-visual .media {
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 2px 8px rgb(0 0 0 / 0.08);
+    transition: box-shadow 0.15s ease, border-color 0.15s ease;
+  }
+  .hero-visual img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    background: #fff;
+    transition: transform 0.3s ease;
+  }
+  @media (prefers-color-scheme: dark) {
+    /* the frost chart is a light-styled SVG */
+    .hero-visual img {
+      filter: invert(0.9) hue-rotate(180deg);
+    }
+  }
+  .hero-visual:hover .media {
+    box-shadow: 0 6px 18px rgb(0 0 0 / 0.14);
+    border-color: var(--accent);
+  }
+  .hero-visual-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+  }
+  .hero-visual:hover .hero-visual-title { color: var(--accent); }
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-visual:hover { transform: translateY(-3px); }
+    .hero-visual:hover img { transform: scale(1.04); }
+  }
+  section { margin-bottom: 2.5rem; }
 </style>

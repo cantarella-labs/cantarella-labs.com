@@ -1,5 +1,5 @@
 ---
-import Layout from "../../layouts/Layout.astro";
+import CaseLayout from "../../layouts/CaseLayout.astro";
 
 export const meta = {
   service: "water-resources",
@@ -7,14 +7,19 @@ export const meta = {
   title: "Water balance for irrigated agriculture in southwest Portugal",
   blurb:
     "Field investigations, geophysics and a numerical water-balance model quantified recharge on a private agricultural property in southwest Portugal and compared with farm water use.",
+  facts: [
+    { label: "Model step", value: "Daily" },
+    { label: "Field methods", value: "Wells · pumping test · ERT" },
+    { label: "Forcing data", value: "MODIS ET + rain" },
+  ],
 };
 ---
 
-<Layout
+<CaseLayout
   title="Case study: Water balance for irrigated agriculture in southwest Portugal"
   description={meta.blurb}
+  meta={meta}
 >
-  <article>
     <p class="eyebrow">Case study · Water resources · Modeling</p>
     <h1>Can groundwater sustain restrictions from the irrigation system?</h1>
 
@@ -50,32 +55,4 @@ export const meta = {
         conceptual scheme, simulated day by day.
       </figcaption>
     </figure>
-  </article>
-</Layout>
-
-<style>
-  .eyebrow {
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    opacity: 0.7;
-  }
-  figure {
-    margin: 1.5rem 0;
-  }
-  figure img {
-    display: block;
-    max-width: 100%;
-    max-height: 65vh;
-    width: auto;
-    height: auto;
-    margin: 0 auto;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    background: #fff;
-  }
-  figcaption {
-    font-size: 0.9rem;
-    opacity: 0.7;
-    margin-top: 0.5rem;
-  }
-</style>
+</CaseLayout>

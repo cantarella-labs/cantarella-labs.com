@@ -136,7 +136,7 @@ const tags = [
     <text x="782" y="196" text-anchor="middle" fill="currentColor">answers you need</text>
   </svg>
 
-  <ul class="stats">
+  <ul class="stats" data-reveal-group>
     <li><strong>4</strong> peer-reviewed publications</li>
     <li><strong>10+</strong> groundwater numerical models</li>
     <li><strong>3</strong> countries worked in — BR · PT · DE</li>
@@ -150,14 +150,14 @@ const tags = [
 <style>
   .profile {
     display: flex;
-    gap: 2rem;
+    gap: 2.5rem;
     align-items: center;
     flex-wrap: wrap;
     margin: 1.5rem 0 2rem;
   }
   .profile img {
-    width: 10rem;
-    height: 10rem;
+    width: clamp(10rem, 14vw, 13rem);
+    height: clamp(10rem, 14vw, 13rem);
     border-radius: 50%;
     border: 1px solid var(--border);
   }
@@ -184,16 +184,31 @@ const tags = [
     color: var(--accent);
   }
   .stats {
-    display: flex;
-    gap: 2rem;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+    gap: 1rem;
     list-style: none;
     padding: 0;
     margin: 2rem 0;
   }
+  .stats li {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    transition: box-shadow 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+  }
+  .stats li:hover {
+    border-color: var(--accent);
+    box-shadow: 0 4px 14px rgb(0 0 0 / 0.1);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .stats li:hover { transform: translateY(-2px); }
+  }
   .stats strong {
     display: block;
-    font-size: 1.6rem;
+    font-size: 1.7rem;
+    font-family: var(--font-display);
+    color: var(--accent);
   }
   .tags {
     display: flex;

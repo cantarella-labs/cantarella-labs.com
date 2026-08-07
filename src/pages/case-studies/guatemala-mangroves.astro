@@ -1,5 +1,5 @@
 ---
-import Layout from "../../layouts/Layout.astro";
+import CaseLayout from "../../layouts/CaseLayout.astro";
 
 export const meta = {
   featured: true,
@@ -7,26 +7,32 @@ export const meta = {
   image: "/case-studies/guatemala-mangroves/mangrove-aerial.jpg",
   title: "Where do Guatemala's coastal mangroves get their freshwater?",
   blurb:
-    "Hydrochemistry, stable isotopes and groundwater modeling traced the water feeding Pacific-coast mangroves back to rain falling on the volcanic highlands, tens of kilometers upstream.",
+    "Hydrochemistry, stable isotopes and groundwater modeling traced the water feeding Pacific-coast mangroves back to rain falling on the volcanic highlands.",
+  facts: [
+    { label: "Isotopes", value: "" },
+    { label: "Groundwater chemistry", value: "" },
+    { label: "Recharge", value: "" },
+    { label: "Groundwater modeling", value: ""}
+  ],
 };
 ---
 
-<Layout
+<CaseLayout
   title="Case study: Groundwater flow to mangroves, Pacific coast of Guatemala"
   description={meta.blurb}
+  meta={meta}
 >
-  <article>
     <p class="eyebrow">Case study · Field hydrogeology · MSc thesis</p>
     <h1>Where do Guatemala's coastal mangroves get their freshwater?</h1>
 
     <p>
       The Retalhuleu district holds the largest mangrove area on Guatemala's
       southern Pacific coast (5,111&nbsp;ha) — a groundwater-dependent
-      ecosystem where fresh groundwater discharge regulates the salinity that
-      mangrove species live by. The same aquifer is the main source of
+      ecosystem where fresh groundwater discharge regulates salinity levels.
+      The same aquifer is the main source of
       drinking water and irrigation for a booming agricultural region, yet
-      almost no hydrogeological information existed to judge whether both
-      could be sustained. Which water do the mangroves actually drink?
+      almost no hydrogeological information existed.
+      Mangrove area experience a long dry season, and therefore use groundwater.
     </p>
 
     <h2>What we did</h2>
@@ -36,9 +42,8 @@ export const meta = {
       hydrochemistry and stable isotopes (&delta;<sup>18</sup>O,
       &delta;<sup>2</sup>H). Three independent lines of evidence were combined
       into one conceptual flow model: water chemistry evolving from
-      Ca-HCO<sub>3</sub> inland to Na-HCO<sub>3</sub> at the coast — the
-      signature of long flow paths through carbonate and silicate dissolution
-      and cation exchange; isotope signatures at the coast too light to be
+      Ca-HCO<sub>3</sub> inland to Na-HCO<sub>3</sub> at the coast – 
+      evidence of long flow paths through carbonate diss. and cation exchange; isotope signatures at the coast too light to be
       local rain, matching precipitation that fell high on the volcanic arc;
       and a water balance with recharge estimation to close the story.
     </p>
@@ -95,27 +100,4 @@ export const meta = {
       GroundwatCH (IHE Delft · IST Lisboa · TU Dresden), hosted by ICC
       Guatemala.
     </p>
-  </article>
-</Layout>
-
-<style>
-  .eyebrow { text-transform: uppercase; letter-spacing: 0.06em; opacity: 0.7; }
-  figure { margin: 1.5rem 0; }
-  figure img {
-    display: block;
-    max-width: 100%;
-    max-height: 65vh;
-    width: auto;
-    height: auto;
-    margin: 0 auto;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    background: #fff;
-  }
-  figcaption { font-size: 0.9rem; opacity: 0.7; margin-top: 0.5rem; }
-  .cite {
-    border-top: 1px solid var(--border);
-    padding-top: 1rem;
-    font-size: 0.95rem;
-  }
-</style>
+</CaseLayout>

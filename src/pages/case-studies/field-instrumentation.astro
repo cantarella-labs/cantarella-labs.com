@@ -1,5 +1,5 @@
 ---
-import Layout from "../../layouts/Layout.astro";
+import CaseLayout from "../../layouts/CaseLayout.astro";
 
 export const meta = {
   service: "instrumentation",
@@ -7,14 +7,19 @@ export const meta = {
   title: "A satellite modem for landslide early warning",
   blurb:
     "Extreme rainfall that triggers landslides is missed by weather models and falls beyond cell coverage. Developing NB-IoT-via-satellite telemetry to make dense, remote rain-gauge networks affordable.",
+  facts: [
+    { label: "Status", value: "In development" },
+    { label: "Standard", value: "3GPP NTN · NB-IoT" },
+    { label: "Target", value: "Landslide early warning" },
+  ],
 };
 ---
 
-<Layout
+<CaseLayout
   title="Case study: Developing a remote satellite modem for landslide prevention"
   description={meta.blurb}
+  meta={meta}
 >
-  <article>
     <p class="eyebrow">Case study · Field instrumentation · In development</p>
     <h1>Measuring the rain that models miss — anywhere</h1>
 
@@ -25,7 +30,7 @@ export const meta = {
       so getting the data out is the hard part.
     </p>
 
-    <figure>
+    <figure class="figure--dark">
       <img
         src="/case-studies/field-instrumentation/landslide_threshold.svg"
         alt="Rainfall intensity versus 96-hour accumulated rain for the February 2023 São Sebastião landslide event: only the on-site rain gauge crosses the Tatizana landslide-threshold envelopes; ERA5-Land, GFS and MERGE stay below them"
@@ -41,7 +46,7 @@ export const meta = {
       </figcaption>
     </figure>
 
-    <figure>
+    <figure class="figure--dark">
       <img
         src="/case-studies/field-instrumentation/cumulative.svg"
         alt="Cumulative rainfall curves at two stations during an extreme event: the rain gauge accumulates far more rain than the GFS and ERA5-Land gridded products"
@@ -77,33 +82,4 @@ export const meta = {
         power, on 3D-printed mounts.
       </figcaption>
     </figure>
-  </article>
-</Layout>
-
-<style>
-  .eyebrow {
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    opacity: 0.7;
-  }
-  figure {
-    margin: 1.5rem 0;
-  }
-  figure img {
-    display: block;
-    max-width: 100%;
-    max-height: 65vh;
-    width: auto;
-    height: auto;
-    margin: 0 auto;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    /* the SVG figures use light text — they need a dark backdrop in both themes */
-    background: #0f172a;
-  }
-  figcaption {
-    font-size: 0.9rem;
-    opacity: 0.7;
-    margin-top: 0.5rem;
-  }
-</style>
+</CaseLayout>

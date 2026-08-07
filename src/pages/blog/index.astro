@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
+import CaseCard from '../../components/CaseCard.astro';
 
 const posts = (await getCollection('blog')).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
@@ -9,23 +10,24 @@ const posts = (await getCollection('blog')).sort(
 
 <Layout title="Insights — Cantarella Labs" description="Notes and articles from Cantarella Labs.">
   <h1>Insights</h1>
-  <ul class="posts">
+  <p class="intro">Notes on water, models and instruments.</p>
+  <div class="card-grid--lg" data-reveal-group>
     {posts.map((post) => (
-      <li>
-        <a href={`/blog/${post.id}/`}>{post.data.title}</a>
-        <time datetime={post.data.pubDate.toISOString()}>
-          {post.data.pubDate.toLocaleDateString('en-US', { dateStyle: 'medium' })}
-        </time>
-        <p>{post.data.description}</p>
-      </li>
+      <CaseCard
+        variant="rich"
+        href={`/blog/${post.id}/`}
+        title={post.data.title}
+        blurb={post.data.description}
+        image={post.data.image?.url}
+        placeholder={post.data.tags[0] ?? 'notes'}
+        tag={post.data.tags[0]}
+        date={post.data.pubDate.toLocaleDateString('en-US', { dateStyle: 'medium' })}
+      />
     ))}
-  </ul>
+  </div>
 </Layout>
 
 <style>
-  .posts { list-style: none; padding: 0; }
-  .posts li { margin-bottom: 1.75rem; }
-  .posts a { font-size: 1.2rem; font-weight: 600; text-decoration: none; }
-  .posts time { display: block; color: var(--muted); font-size: 0.85rem; margin: 0.15rem 0; }
-  .posts p { margin: 0.25rem 0 0; color: var(--muted); }
+  .intro { color: var(--muted); margin-top: 0; }
+  .card-grid--lg { margin-top: 2rem; }
 </style>

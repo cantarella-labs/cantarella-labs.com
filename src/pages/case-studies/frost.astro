@@ -1,5 +1,5 @@
 ---
-import Layout from "../../layouts/Layout.astro";
+import CaseLayout from "../../layouts/CaseLayout.astro";
 
 export const meta = {
   featured: true,
@@ -8,29 +8,25 @@ export const meta = {
   title: "Frost forecasting for orchards in Castilla La Mancha, Spain",
   blurb:
     "Global weather models, calibrated against on-site sensor data and blended into one verified frost probability — alerts up to 5 nights ahead.",
+  facts: [
+    { label: "Next-night forecast error", value: "1.4 °C" },
+    { label: "Archive frost nights alerted", value: "3 / 3" },
+    { label: "Frost discrimination (AUC)", value: "0.99" },
+    { label: "Verified nights", value: "~200" },
+  ],
+  links: [{ label: "Live dashboard", href: "https://frost.cantarellalabs.com/" }],
 };
 
 const dashboard_page = "https://frost.cantarellalabs.com/";
 ---
 
-<Layout
+<CaseLayout
   title="Case study: Calibrated frost forecasts for orchards"
   description={meta.blurb}
+  meta={meta}
 >
-  <article class="case-study">
     <p class="eyebrow">Case study · Agricultural forecasting</p>
     <h1>Frost alerts a grower can act on</h1>
-
-    <ul class="stats">
-      <li>
-        <strong>1.4&thinsp;°C</strong> next-night forecast error
-      </li>
-      <li>
-        <strong>3 / 3</strong> archive frost nights alerted, one night ahead
-      </li>
-      <li><strong>0.99</strong> frost discrimination (AUC)</li>
-      <li><strong>~200</strong> verified nights across two frost seasons</li>
-    </ul>
 
     <p>
       Global weather models run on a 25&nbsp;km grid — they cannot see the
@@ -38,9 +34,7 @@ const dashboard_page = "https://frost.cantarellalabs.com/";
       ensemble models (ECMWF IFS &amp; AIFS, DWD ICON-EU) against the
       on-site station sensor, blends them by likelihood, and turns the result
       into frost forecast up to 5 nights ahead, enough time
-      to plan protection, not just react. On the three frost nights in the
-      archive the raw models said ≈0%; the calibrated system alerted on all
-      three.
+      to plan protection, not just react. The model can predict all frost nights in the dataset;
     </p>
 
     <svg viewBox="0 0 920 220" role="img" aria-label="Weather models plus your orchard's data go into FrostCast, which produces the frost risk for tonight, shown on the dashboard and sent as an alert" style="width:100%;height:auto;font-size:16px;font-family:'Bradley Hand','Segoe Print','Comic Sans MS',cursive;">
@@ -159,14 +153,12 @@ const dashboard_page = "https://frost.cantarellalabs.com/";
       two seasons of on-site data: nine nights out of ten the observed
       temperature falls inside it.
     </p>
-    <figure class="hero-chart">
-      <a href={dashboard_page} target="_blank" rel="noopener">
-        <img
-          src="/case-studies/frost/hero_band.svg"
-          alt="Observed temperatures vs the calibrated forecast with its 90% uncertainty band for the week of the 2026-03-30 frost — the observations stay inside the band and dip below the critical temperature on the frost night"
-          loading="lazy"
-        />
-      </a>
+    <figure class="figure--invertible">
+      <img
+        src="/case-studies/frost/hero_band.svg"
+        alt="Observed temperatures vs the calibrated forecast with its 90% uncertainty band for the week of the 2026-03-30 frost — the observations stay inside the band and dip below the critical temperature on the frost night"
+        loading="lazy"
+      />
       <figcaption>
         One cold week from the archive: observed vs the forecast issued the
         morning before, with the frost night caught below −1.5&thinsp;°C.
@@ -178,51 +170,9 @@ const dashboard_page = "https://frost.cantarellalabs.com/";
         →</a
       >
     </p>
-  </article>
-</Layout>
+</CaseLayout>
 
 <style>
-  .eyebrow {
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    opacity: 0.7;
-  }
-  .stats {
-    display: flex;
-    gap: 2rem;
-    flex-wrap: wrap;
-    list-style: none;
-    padding: 0;
-  }
-  .stats strong {
-    display: block;
-    font-size: 1.6rem;
-  }
-  .hero-chart {
-    margin: 1.5rem 0;
-  }
-  .hero-chart img {
-    display: block;
-    max-width: 100%;
-    max-height: 65vh;
-    width: auto;
-    height: auto;
-    margin: 0 auto;
-    border: 1px solid color-mix(in srgb, currentColor 15%, transparent);
-    border-radius: 8px;
-  }
-  @media (prefers-color-scheme: dark) {
-    /* ponytail: filter approximation; swap for a real dark variant from the
-       figures pipeline if the colors ever matter exactly */
-    .hero-chart img {
-      filter: invert(0.9) hue-rotate(180deg);
-    }
-  }
-  .hero-chart figcaption {
-    font-size: 0.9rem;
-    opacity: 0.7;
-    margin-top: 0.5rem;
-  }
   .dash-link {
     font-weight: 600;
   }
