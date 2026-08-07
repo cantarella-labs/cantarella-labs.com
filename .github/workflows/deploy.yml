@@ -31,3 +31,5 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
+        with:
+          timeout: 900000 # 15 min — rides out Pages queue lag during GitHub incidents
