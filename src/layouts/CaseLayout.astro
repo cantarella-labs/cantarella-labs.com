@@ -179,6 +179,11 @@ const hasAside = Boolean(service || meta.facts?.length || meta.links?.length);
     padding-top: 1rem;
     font-size: 0.95rem;
   }
+  .case-body :global(.dash-link) { font-weight: 600; }
+  .case-body :global(.site-line) {
+    font-size: 0.9rem;
+    opacity: 0.7;
+  }
   .case-body :global(.stats) {
     display: flex;
     gap: 2rem;

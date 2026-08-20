@@ -2,29 +2,15 @@
 import Layout from "../layouts/Layout.astro";
 import CaseCard from "../components/CaseCard.astro";
 import { services } from "../services";
+import { getCollection } from "astro:content";
 
-const pages = import.meta.glob<{
-  meta?: {
-    service?: string;
-    title: string;
-    blurb: string;
-    image?: string;
-    imageBg?: string;
-  };
-}>("./case-studies/*.astro", { eager: true });
-const cases = Object.entries(pages).flatMap(([path, page]) =>
-  page.meta
-    ? [
-        {
-          href: path.replace("./", "/").replace(".astro", "/"),
-          service: page.meta.service,
-          title: page.meta.title,
-          image: page.meta.image,
-          imageBg: page.meta.imageBg,
-        },
-      ]
-    : [],
-);
+const cases = (await getCollection("caseStudies")).map((c) => ({
+  href: `/case-studies/${c.id}/`,
+  service: c.data.service,
+  title: c.data.title,
+  image: c.data.image,
+  imageBg: c.data.imageBg,
+}));
 ---
 
 <Layout title="Services — Cantarella Labs" description="Forecasting, groundwater modeling and field instrumentation: data and model-driven answers to water challenges.">

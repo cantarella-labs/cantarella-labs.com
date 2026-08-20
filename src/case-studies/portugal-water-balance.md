@@ -1,0 +1,50 @@
+---
+service: water-resources
+image: /case-studies/portugal-water-balance/water-balance-model.png
+title: Water balance for irrigated agriculture in southwest Portugal
+blurb: >-
+  Field investigations, geophysics and a numerical water-balance model
+  quantified recharge on a private agricultural property in southwest Portugal
+  and compared with farm water use.
+facts:
+  - label: Model step
+    value: Daily
+  - label: Field methods
+    value: Wells · pumping test · ERT
+  - label: Forcing data
+    value: MODIS ET + rain
+---
+
+<p class="eyebrow">Case study · Water resources · Modeling</p>
+
+# Can groundwater sustain restrictions from the irrigation system?
+
+A private agricultural property in southwest Portugal grows berries in
+soilless media under tunnels — irrigation is essential, and the regional
+reservoir that supplies surface water has been running low after roughly a
+decade of below-average rainfall, bringing water restrictions. Groundwater
+and rainfall could help, but how much?
+
+## What we did
+
+Field work — shallow wells, a deep borehole, a pumping test and ERT
+geophysics — established the aquifer system. On top of it we built a
+daily numerical water-balance model: soil storage driven by measured and
+remote-sensing rainfall and MODIS reference evapotranspiration, coupled
+to a reservoir and mixing-tank module simulating the property's water
+infrastructure — from recharge to the blend of groundwater and grid
+supply in irrigation.
+
+<figure>
+  <img
+    src="/case-studies/portugal-water-balance/water-balance-model.png"
+    alt="Conceptual model of the water-balance: precipitation and evapotranspiration act on the soilwater storage, which recharges the groundwater storage; wells and a borehole feed a well reservoir and a mix tank blending groundwater with the external grid supply into irrigation"
+    loading="lazy"
+    width="869"
+    height="557"
+  />
+  <figcaption>
+    The water-balance model: every store and flux of the property in one
+    conceptual scheme, simulated day by day.
+  </figcaption>
+</figure>

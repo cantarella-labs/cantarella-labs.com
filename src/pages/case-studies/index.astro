@@ -1,6 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import CaseCard from "../../components/CaseCard.astro";
+import { getCollection } from "astro:content";
 
 const tagNames: Record<string, string> = {
   forecasting: "Forecasting",
@@ -10,32 +11,16 @@ const tagNames: Record<string, string> = {
   "water-resources": "Water resources",
 };
 
-const pages = import.meta.glob<{
-  meta?: {
-    title: string;
-    blurb: string;
-    image?: string;
-    imageBg?: string;
-    service?: string;
-    featured?: boolean;
-  };
-}>("./*.astro", { eager: true });
-const cases = Object.entries(pages)
-  .flatMap(([path, page]) =>
-    page.meta
-      ? [
-          {
-            href: `/case-studies/${path.replace("./", "").replace(".astro", "")}/`,
-            title: page.meta.title,
-            blurb: page.meta.blurb,
-            image: page.meta.image,
-            imageBg: page.meta.imageBg,
-            tag: page.meta.service ? tagNames[page.meta.service] : undefined,
-            featured: page.meta.featured ?? false,
-          },
-        ]
-      : [],
-  )
+const cases = (await getCollection("caseStudies"))
+  .map((c) => ({
+    href: `/case-studies/${c.id}/`,
+    title: c.data.title,
+    blurb: c.data.blurb,
+    image: c.data.image,
+    imageBg: c.data.imageBg,
+    tag: c.data.service ? tagNames[c.data.service] : undefined,
+    featured: c.data.featured,
+  }))
   .sort((a, b) => Number(b.featured) - Number(a.featured));
 ---
 

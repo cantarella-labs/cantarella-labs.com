@@ -1,0 +1,96 @@
+---
+featured: true
+service: hydrogeology
+image: /case-studies/guatemala-mangroves/mangrove-aerial.jpg
+title: Where do Guatemala's coastal mangroves get their freshwater?
+pageTitle: "Case study: Groundwater flow to mangroves, Pacific coast of Guatemala"
+blurb: >-
+  Hydrochemistry, stable isotopes and groundwater modeling traced the water
+  feeding Pacific-coast mangroves back to rain falling on the volcanic
+  highlands.
+facts:
+  - label: Isotopes
+    value: ""
+  - label: Groundwater chemistry
+    value: ""
+  - label: Recharge
+    value: ""
+  - label: Groundwater modeling
+    value: ""
+---
+
+<p class="eyebrow">Case study · Field hydrogeology · MSc thesis</p>
+
+# Where do Guatemala's coastal mangroves get their freshwater?
+
+The Retalhuleu district holds the largest mangrove area on Guatemala's
+southern Pacific coast (5,111&nbsp;ha) — a groundwater-dependent
+ecosystem where fresh groundwater discharge regulates salinity levels.
+The same aquifer is the main source of
+drinking water and irrigation for a booming agricultural region, yet
+almost no hydrogeological information existed.
+Mangrove area experience a long dry season, and therefore use groundwater.
+
+## What we did
+
+A dry-season field campaign across the Samalá alluvial aquifer:
+inventorying wells, measuring groundwater heads, and sampling for
+hydrochemistry and stable isotopes (&delta;<sup>18</sup>O,
+&delta;<sup>2</sup>H). Three independent lines of evidence were combined
+into one conceptual flow model: water chemistry evolving from
+Ca-HCO<sub>3</sub> inland to Na-HCO<sub>3</sub> at the coast –
+evidence of long flow paths through carbonate diss. and cation exchange; isotope signatures at the coast too light to be
+local rain, matching precipitation that fell high on the volcanic arc;
+and a water balance with recharge estimation to close the story.
+
+<figure>
+  <img
+    src="/case-studies/guatemala-mangroves/isotopes-distance.png"
+    alt="Stable isotope ratios of groundwater samples plotted against distance to the coast: samples near the coast carry the depleted signature of highland rain rather than local coastal precipitation"
+    loading="lazy"
+  />
+  <figcaption>
+    The isotope evidence: &delta;<sup>2</sup>H and &delta;<sup>18</sup>O of
+    groundwater versus distance to the coast, against the local rain
+    stations (dashed lines). Coastal discharge waters are isotopically
+    lighter than coastal rain — they fell as precipitation high in the
+    volcanic arc.
+  </figcaption>
+</figure>
+
+## What we found
+
+The water discharging into the mangrove forests is deep, long-traveled
+groundwater recharged on the slopes of the volcanic highlands, tens of
+kilometers upstream — not local rainfall. That single finding reshapes
+how the system must be managed: protecting the mangroves means
+protecting recharge areas far inland, and sustainability depends on
+long-term average recharge rather than local droughts. Because the
+water travels for years, even strong El&nbsp;Niño events barely touch
+the groundwater system that keeps the mangroves alive. Groundwater
+heads near the coast already dip below sea level, so the balance is
+delicate: excessive pumping risks saltwater intrusion and would shift
+the salinity gradient that sets the natural zonation of mangrove
+species.
+
+<figure>
+  <img
+    src="/case-studies/guatemala-mangroves/conceptual-model.png"
+    alt="Conceptual hydrogeological cross-section from the volcanic highlands (75 km inland) to the coast: groundwater recharges in the Tertiary and recent volcanics, flows through the Samalá and Pleistocene aquifers, and discharges at the mangroves next to the saltwater wedge"
+    loading="lazy"
+    width="1280"
+    height="720"
+  />
+  <figcaption>
+    The conceptual model: rain recharging the volcanic highlands travels
+    ~75&nbsp;km through the Samalá and Pleistocene aquifers and discharges
+    at the mangroves (GDEs), holding back the saltwater wedge.
+  </figcaption>
+</figure>
+
+<p class="cite">
+Cantarella, V. P. (2022). <em>Hydrogeological investigation in coastal
+mangrove ecosystems of the Pacific coast of Guatemala.</em> MSc thesis,
+GroundwatCH (IHE Delft · IST Lisboa · TU Dresden), hosted by ICC
+Guatemala.
+</p>
